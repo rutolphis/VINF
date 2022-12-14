@@ -12,6 +12,7 @@ from org.apache.lucene.queryparser.classic import QueryParser
 from org.apache.lucene.document import Document, Field, StringField, TextField, StoredField, FieldType
 from org.apache.lucene.queryparser.classic import MultiFieldQueryParser
 from org.apache.lucene.search import IndexSearcher
+from deep_translator import GoogleTranslator
 
 
 #function called indexData() that is used to index some data stored in a JSON file called data.json.
@@ -20,6 +21,18 @@ from org.apache.lucene.search import IndexSearcher
 #for each item containing several fields (title, text, username, ip). The fields are added to the document,
 #and the document is then added to the index. Finally, the index is closed.
 
+def menu(x):
+    if x == '1':
+            indexData()
+            print("data boli zindexované")
+
+    elif x == '2':
+        print("Zadajte hladané slovo:")
+        searcher_word = input()
+        search(searcher_word)
+
+    else:
+            return 0
 def indexData():
     with open('data.json') as user_file:
       json_data = json.load(user_file)
@@ -71,6 +84,8 @@ def search(input):
     fields = ["title", "text", "username"]
     # parse the query string and search the index
 
+    translated_words = translation(input)
+
     query = MultiFieldQueryParser.parse(MultiFieldQueryParser(fields, analyzer), input)
     results = searcher.search(query, 10)
 
@@ -81,6 +96,20 @@ def search(input):
         print("Field 2: " + doc.get("text"))
         print("Field 3: " + doc.get("username"))
 
-print("Zadajte hladané slovo:")
-searcher_word = input()
-search(searcher_word)
+def translation(input):
+    translatedEs = GoogleTranslator(source='sk', target='es').translate(text=input)
+    translatedEn = GoogleTranslator(source='sk', target='en').translate(text=input)
+    print("Spanish: " + translatedEs)
+    print("English: " + translatedEn)
+
+    return [input, translatedEn, translatedEs]
+
+
+print("Choose option:\n"
+          "1 - indexuj data\n"
+          "2 - hladaj v dátach\n")
+x = input()
+menu(x)
+
+
+
