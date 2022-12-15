@@ -31,6 +31,12 @@ def menu(x):
         searcher_word = input()
         search(searcher_word)
 
+    elif x == '3':
+        test_indexData()
+
+    elif x == '4':
+        test_search()
+
     else:
             return 0
 def indexData():
@@ -104,10 +110,25 @@ def translation(input):
 
     return [input, translatedEn, translatedEs]
 
+def test_indexData(self):
+     # Test that indexData() creates an index with the correct number of documents
+    indexData()
+    index_dir = "index"
+    reader = DirectoryReader.open(NIOFSDirectory.open(Paths.get(index_dir)))
+    self.assertEqual(reader.numDocs(), len(json_data))
+    reader.close()
+
+def test_search(self):
+      # Test that search() returns the correct number of documents
+    indexData()
+    results = search('hello')
+    self.assertEqual(len(results), 2)
 
 print("Choose option:\n"
           "1 - indexuj data\n"
-          "2 - hladaj v dátach\n")
+          "2 - hladaj v dátach\n"
+      "3 - otestuj indexx\n"
+      "4 - otestuj search\n")
 x = input()
 menu(x)
 
