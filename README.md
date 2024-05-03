@@ -19,7 +19,7 @@ The Wikipedia Search in Multiple Languages project utilizes Python, PyLucene, an
 1. **Clone the Repository**
    Start by cloning the repository to your local machine:
    ```bash
-   git clone https://github.com/yourusername/wikipedia-search-multiple-languages.git
+   git clone https://github.com/rutolphis/Wikipedia-Search-in-Multiple-Languages.git
    cd wikipedia-search-multiple-languages
    ```
 
